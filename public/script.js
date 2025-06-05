@@ -22,20 +22,26 @@ function shuffle(array) {
 function createGrid() {
   grid.innerHTML = '';
 
+  // Combine all emojis from all themes into one set to remove duplicates
   const allEmojis = [...new Set(emojiThemes.flat())];
+
+  // Prepare emojiPool with up to 25 unique emojis
   let emojiPool = [];
 
   if (allEmojis.length >= 25) {
     emojiPool = allEmojis.slice(0, 25);
   } else {
+    // If less than 25 unique emojis total, repeat emojis to fill 25
     while (emojiPool.length < 25) {
       emojiPool = emojiPool.concat(allEmojis);
     }
     emojiPool = emojiPool.slice(0, 25);
   }
 
+  // Shuffle emojiPool to randomize placement
   shuffle(emojiPool);
 
+  // Create 25 bubbles with unique emojis
   for (let i = 0; i < 25; i++) {
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
@@ -52,29 +58,6 @@ function popBubble(bubble) {
     navigator.vibrate(50);
   }
   bubble.classList.add('pop');
-
-  // Check if all bubbles popped to launch confetti
-  const allPopped = [...grid.children].every(b => b.classList.contains('pop'));
-  if (allPopped) {
-    launchConfetti();
-  }
-}
-
-function launchConfetti() {
-  const confettiCount = 100;
-  const confettiColors = ['#FFC700', '#FF0000', '#2E3192', '#41BBC7'];
-
-  for (let i = 0; i < confettiCount; i++) {
-    const confetti = document.createElement('div');
-    confetti.classList.add('confetti');
-    confetti.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
-    confetti.style.left = Math.random() * 100 + 'vw';
-    confetti.style.animationDelay = (Math.random() * 3) + 's';
-    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-    document.body.appendChild(confetti);
-
-    confetti.addEventListener('animationend', () => confetti.remove());
-  }
 }
 
 resetBtn.addEventListener('click', createGrid);
