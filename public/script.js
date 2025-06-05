@@ -1,3 +1,5 @@
+import { sdk } from '@farcaster/frame-sdk';
+
 const allEmojis = [
   '🫧', '💨', '🌬️', '💦', '🌊', '💧', '❄️',
   '🍩', '🍪', '🧁', '🍰', '🎂', '🍫', '🍬',
@@ -47,6 +49,6 @@ resetBtn.addEventListener('click', createGrid);
 createGrid();
 
 // Notify Farcaster Studio the app is ready
-if (typeof window.farcaster !== 'undefined' && typeof window.farcaster.ready === 'function') {
-  window.farcaster.ready();
-}
+sdk.actions.ready().catch((e) => {
+  console.error('Error calling sdk.actions.ready():', e);
+});
