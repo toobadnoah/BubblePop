@@ -1,5 +1,3 @@
-// Load Farcaster SDK via CDN in HTML (see note below)
-
 const emojiThemes = [
   ['🫧', '💨', '🌬️', '💦', '🌊', '💧', '❄️'],
   ['🍩', '🍪', '🧁', '🍰', '🎂', '🍫', '🍬'],
@@ -61,7 +59,6 @@ resetBtn.addEventListener('click', createGrid);
 async function initialize() {
   createGrid();
 
-  // Wait for Farcaster SDK ready call
   if (window.frame && window.frame.sdk && window.frame.sdk.actions) {
     await window.frame.sdk.actions.ready();
     console.log("Farcaster SDK ready() called.");
