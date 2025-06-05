@@ -1,13 +1,13 @@
 {
-  "name": "Bubble Pop",
-  "description": "A satisfying bubble-wrap popping game with haptic feedback and randomized emoji themes.",
-  "url": "https://bubble-6lcxmxeo9-cashs-projects-4c26605a.vercel.app",
-  "icons": [
-    "https://bubble-6lcxmxeo9-cashs-projects-4c26605a.vercel.app/icon.png"
-  ],
-  "requestedPermissions": [],
-  "navigation": {
-    "type": "overlay"
-  }
+  "name": "BubblePop",
+  "description": "Pop bubble wrap with randomized emojis and haptic feedback",
+  "version": "1.0.0",
+  "frame": {
+    "splashImageUrl": "https://bubble-6lcxmxeo9-cashs-projects-4c26605a.vercel.app/splash.png",
+    "splashBackgroundColor": "#E0F7FA"
+  },
+  "author": {
+    "name": "Cash Rosario"
+  },
+  "permissions": []
 }
-
