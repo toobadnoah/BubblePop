@@ -22,20 +22,26 @@ function shuffle(array) {
 function createGrid() {
   grid.innerHTML = '';
 
-  // 1. Pick random theme
-  const emojis = emojiThemes[Math.floor(Math.random() * emojiThemes.length)];
+  // Combine all emojis from all themes into one set to remove duplicates
+  const allEmojis = [...new Set(emojiThemes.flat())];
 
-  // 2. Build emoji pool: repeat enough times to get >= 25 emojis
+  // Prepare emojiPool with up to 25 unique emojis
   let emojiPool = [];
-  while (emojiPool.length < 25) {
-    emojiPool = emojiPool.concat(emojis);
-  }
-  emojiPool = emojiPool.slice(0, 25);
 
-  // 3. Shuffle the emojiPool to randomize order
+  if (allEmojis.length >= 25) {
+    emojiPool = allEmojis.slice(0, 25);
+  } else {
+    // If less than 25 unique emojis total, repeat emojis to fill 25
+    while (emojiPool.length < 25) {
+      emojiPool = emojiPool.concat(allEmojis);
+    }
+    emojiPool = emojiPool.slice(0, 25);
+  }
+
+  // Shuffle emojiPool to randomize placement
   shuffle(emojiPool);
 
-  // 4. Create bubbles with unique emojis from shuffled pool
+  // Create 25 bubbles with unique emojis
   for (let i = 0; i < 25; i++) {
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
