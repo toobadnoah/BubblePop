@@ -46,11 +46,25 @@ resetBtn.addEventListener('click', createGrid);
 
 async function appReady() {
   createGrid();
-  if (window.farcaster && typeof window.farcaster.ready === 'function') {
+
+  // Detect if running as Mini App via path or query param
+  const url = new URL(window.location.href);
+  const isMiniApp = url.pathname.startsWith('/mini') || url.searchParams.get('miniApp') === 'true';
+
+  if (isMiniApp) {
+    try {
+      const { sdk } = await import('@farcaster/frame-sdk');
+      await sdk.actions.ready({ disableNativeGestures: true });
+      console.log('Farcaster SDK ready() called');
+    } catch (err) {
+      console.error('Error loading Farcaster SDK:', err);
+    }
+  } else if (window.farcaster && typeof window.farcaster.ready === 'function') {
+    // fallback if old farcaster global exists
     await window.farcaster.ready();
     console.log('Farcaster ready() called');
   } else {
-    console.log('Farcaster.ready() is not available');
+    console.log('Not running inside Farcaster Mini App');
   }
 }
 
