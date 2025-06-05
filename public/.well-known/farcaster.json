@@ -1,5 +1,6 @@
 {
-  "name": "BubblePop",
-  "splashImageUrl": "https://bubble-86mva14y7-cashs-projects-4c26605a.vercel.app/splash.png",
-  "splashBackgroundColor": "#ffffff"
+  "name": "Bubble Pop",
+  "description": "A fun emoji popping game",
+  "splashImageUrl": "https://bubble-ahuspvdqr-cashs-projects-4c26605a.vercel.app/splash.png",
+  "splashBackgroundColor": "#E0F7FA"
 }
