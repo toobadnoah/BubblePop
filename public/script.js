@@ -1,3 +1,5 @@
+// Load Farcaster SDK via CDN in HTML (see note below)
+
 const emojiThemes = [
   ['🫧', '💨', '🌬️', '💦', '🌊', '💧', '❄️'],
   ['🍩', '🍪', '🧁', '🍰', '🎂', '🍫', '🍬'],
@@ -22,16 +24,27 @@ function shuffle(array) {
 function createGrid() {
   grid.innerHTML = '';
 
-  const allEmojis = [...new Set(emojiThemes.flat())];
-  const emojiPool = shuffle(allEmojis).slice(0, 25);
+  // 1. Pick random theme
+  const emojis = emojiThemes[Math.floor(Math.random() * emojiThemes.length)];
 
-  emojiPool.forEach((emoji) => {
+  // 2. Build emoji pool: repeat enough times to get >= 25 emojis
+  let emojiPool = [];
+  while (emojiPool.length < 25) {
+    emojiPool = emojiPool.concat(emojis);
+  }
+  emojiPool = emojiPool.slice(0, 25);
+
+  // 3. Shuffle the emojiPool to randomize order
+  shuffle(emojiPool);
+
+  // 4. Create bubbles with unique emojis from shuffled pool
+  for (let i = 0; i < 25; i++) {
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
-    bubble.textContent = emoji;
+    bubble.textContent = emojiPool[i];
     bubble.addEventListener('click', () => popBubble(bubble));
     grid.appendChild(bubble);
-  });
+  }
 }
 
 function popBubble(bubble) {
@@ -40,10 +53,21 @@ function popBubble(bubble) {
   if (navigator.vibrate) {
     navigator.vibrate(50);
   }
-
   bubble.classList.add('pop');
 }
 
 resetBtn.addEventListener('click', createGrid);
 
-createGrid();
+async function initialize() {
+  createGrid();
+
+  // Wait for Farcaster SDK ready call
+  if (window.frame && window.frame.sdk && window.frame.sdk.actions) {
+    await window.frame.sdk.actions.ready();
+    console.log("Farcaster SDK ready() called.");
+  } else {
+    console.warn("Farcaster SDK not detected.");
+  }
+}
+
+initialize();
