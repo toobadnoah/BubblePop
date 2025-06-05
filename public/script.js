@@ -1,11 +1,11 @@
-const emojiThemes = [
-  ['🫧', '💨', '🌬️', '💦', '🌊', '💧', '❄️'],
-  ['🍩', '🍪', '🧁', '🍰', '🎂', '🍫', '🍬'],
-  ['🐸', '🐵', '🦊', '🐯', '🦁', '🐰', '🐼'],
-  ['🎈', '🎉', '🎊', '🎂', '🎁', '🎵', '🎶'],
-  ['💎', '💠', '🔷', '🔹', '🔸', '✨', '⚡'],
-  ['🌸', '🌼', '🌻', '🌺', '🌷', '🌹', '🥀'],
-  ['💥', '✨', '⚡', '🔥', '🌟', '🌠', '🎇']
+const allEmojis = [
+  '🫧', '💨', '🌬️', '💦', '🌊', '💧', '❄️',
+  '🍩', '🍪', '🧁', '🍰', '🎂', '🍫', '🍬',
+  '🐸', '🐵', '🦊', '🐯', '🦁', '🐰', '🐼',
+  '🎈', '🎉', '🎊', '🎁', '🎵', '🎶', '💎',
+  '💠', '🔷', '🔹', '🔸', '✨', '⚡', '🌸',
+  '🌼', '🌻', '🌺', '🌷', '🌹', '🥀', '💥',
+  '🔥', '🌟', '🌠', '🎇'
 ];
 
 const grid = document.getElementById('bubble-grid');
@@ -22,24 +22,15 @@ function shuffle(array) {
 function createGrid() {
   grid.innerHTML = '';
 
-  // 1. Pick random theme
-  const emojis = emojiThemes[Math.floor(Math.random() * emojiThemes.length)];
+  // Shuffle full emoji list and pick 25 unique emojis
+  const shuffled = shuffle([...allEmojis]);
+  const selected = shuffled.slice(0, 25);
 
-  // 2. Build emoji pool: repeat enough times to get >= 25 emojis
-  let emojiPool = [];
-  while (emojiPool.length < 25) {
-    emojiPool = emojiPool.concat(emojis);
-  }
-  emojiPool = emojiPool.slice(0, 25);
-
-  // 3. Shuffle the emojiPool to randomize order
-  shuffle(emojiPool);
-
-  // 4. Create bubbles with unique emojis from shuffled pool
+  // Create bubbles with unique emojis
   for (let i = 0; i < 25; i++) {
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
-    bubble.textContent = emojiPool[i];
+    bubble.textContent = selected[i];
     bubble.addEventListener('click', () => popBubble(bubble));
     grid.appendChild(bubble);
   }
@@ -56,15 +47,4 @@ function popBubble(bubble) {
 
 resetBtn.addEventListener('click', createGrid);
 
-async function initialize() {
-  createGrid();
-
-  if (window.frame && window.frame.sdk && window.frame.sdk.actions) {
-    await window.frame.sdk.actions.ready();
-    console.log("Farcaster SDK ready() called.");
-  } else {
-    console.warn("Farcaster SDK not detected.");
-  }
-}
-
-initialize();
+createGrid();
