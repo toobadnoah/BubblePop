@@ -22,33 +22,16 @@ function shuffle(array) {
 function createGrid() {
   grid.innerHTML = '';
 
-  // Combine all emojis from all themes into one set to remove duplicates
   const allEmojis = [...new Set(emojiThemes.flat())];
+  const emojiPool = shuffle(allEmojis).slice(0, 25);
 
-  // Prepare emojiPool with up to 25 unique emojis
-  let emojiPool = [];
-
-  if (allEmojis.length >= 25) {
-    emojiPool = allEmojis.slice(0, 25);
-  } else {
-    // If less than 25 unique emojis total, repeat emojis to fill 25
-    while (emojiPool.length < 25) {
-      emojiPool = emojiPool.concat(allEmojis);
-    }
-    emojiPool = emojiPool.slice(0, 25);
-  }
-
-  // Shuffle emojiPool to randomize placement
-  shuffle(emojiPool);
-
-  // Create 25 bubbles with unique emojis
-  for (let i = 0; i < 25; i++) {
+  emojiPool.forEach((emoji) => {
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
-    bubble.textContent = emojiPool[i];
+    bubble.textContent = emoji;
     bubble.addEventListener('click', () => popBubble(bubble));
     grid.appendChild(bubble);
-  }
+  });
 }
 
 function popBubble(bubble) {
@@ -57,6 +40,7 @@ function popBubble(bubble) {
   if (navigator.vibrate) {
     navigator.vibrate(50);
   }
+
   bubble.classList.add('pop');
 }
 
