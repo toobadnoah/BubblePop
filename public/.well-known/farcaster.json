@@ -1,10 +1,5 @@
 {
-  "name": "Bubble Pop",
-  "slug": "bubble-pop",
-  "description": "Pop bubble wrap with randomized emojis!",
-  "splash": {
-    "image": "/splash.png",
-    "backgroundColor": "#ffffff"
-  },
-  "version": "1.0.0"
+  "name": "BubblePop",
+  "splashImageUrl": "https://your-deployment.com/splash.png",
+  "splashBackgroundColor": "#ffffff"
 }
