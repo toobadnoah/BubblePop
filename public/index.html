@@ -9,6 +9,14 @@
 <body>
   <div id="bubble-grid"></div>
   <button id="reset-btn">Reset</button>
+
+  <!-- Load Farcaster SDK via CDN and expose to global window -->
+  <script type="module">
+    import { sdk } from 'https://esm.run/@farcaster/frame-sdk';
+    window.farcasterSDK = sdk;
+  </script>
+
+  <!-- Your main app logic -->
   <script type="module" src="script.js"></script>
 </body>
 </html>
