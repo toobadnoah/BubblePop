@@ -1,5 +1,5 @@
 const emojiThemes = [
-  ['🫧', '💨', '🌬️', '💦', '🌊', '💧', '❄️'], // expanded theme with 7 emojis
+  ['🫧', '💨', '🌬️', '💦', '🌊', '💧', '❄️'],
   ['🍩', '🍪', '🧁', '🍰', '🎂', '🍫', '🍬'],
   ['🐸', '🐵', '🦊', '🐯', '🦁', '🐰', '🐼'],
   ['🎈', '🎉', '🎊', '🎂', '🎁', '🎵', '🎶'],
@@ -12,7 +12,6 @@ const grid = document.getElementById('bubble-grid');
 const resetBtn = document.getElementById('reset-btn');
 
 function shuffle(array) {
-  // Fisher–Yates shuffle
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
@@ -23,19 +22,20 @@ function shuffle(array) {
 function createGrid() {
   grid.innerHTML = '';
 
-  // Pick a random emoji theme
+  // 1. Pick random theme
   const emojis = emojiThemes[Math.floor(Math.random() * emojiThemes.length)];
 
-  // We need 25 unique emojis, so repeat the theme enough times
+  // 2. Build emoji pool: repeat enough times to get >= 25 emojis
   let emojiPool = [];
   while (emojiPool.length < 25) {
     emojiPool = emojiPool.concat(emojis);
   }
-  emojiPool = emojiPool.slice(0, 25); // cut to exact 25
+  emojiPool = emojiPool.slice(0, 25);
 
-  // Shuffle emoji pool to randomize placement
+  // 3. Shuffle the emojiPool to randomize order
   shuffle(emojiPool);
 
+  // 4. Create bubbles with unique emojis from shuffled pool
   for (let i = 0; i < 25; i++) {
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
