@@ -21,12 +21,9 @@ function shuffle(array) {
 
 function createGrid() {
   grid.innerHTML = '';
-
-  // Shuffle full emoji list and pick 25 unique emojis
   const shuffled = shuffle([...allEmojis]);
   const selected = shuffled.slice(0, 25);
 
-  // Create bubbles with unique emojis
   for (let i = 0; i < 25; i++) {
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
@@ -48,3 +45,8 @@ function popBubble(bubble) {
 resetBtn.addEventListener('click', createGrid);
 
 createGrid();
+
+// Notify Farcaster Studio the app is ready
+if (typeof window.farcaster !== 'undefined' && typeof window.farcaster.ready === 'function') {
+  window.farcaster.ready();
+}
