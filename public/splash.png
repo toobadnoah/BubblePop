@@ -1,0 +1,3 @@
+git add public/splash.png
+git commit -m "Add splash image for Farcaster mini app"
+git push
